@@ -1,0 +1,8 @@
+node_modules/
+.vscode/
+.idea/
+.nuxt/
+.output/
+pnpm-error.log
+.DS_Store
+*.md
