@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
+const storeAuth = useAuthStore()
+
 const { $getDataList, $axios } = useNuxtApp()
 const { data, pending } = await $getDataList()
 // const { data } = await useFetchApi('/tourist', {})
@@ -24,7 +26,7 @@ const loadDataAxios = () => {
 const loadDataOFetch = () => {
   const headers: HeadersInit = new Headers()
 
-  headers.set('Authorization', 'Bearer ' + config.public.apiToken)
+  headers.set('Authorization', 'Bearer ' + storeAuth.token)
   headers.set('Accept', 'application/json')
 
   $fetch(config.public.apiUrl + '/tourist', {
@@ -35,13 +37,8 @@ const loadDataOFetch = () => {
     })
     .catch((err) => {
       console.log(err)
+      throw new Error(err)
     })
-}
-
-// set cookie
-const authCookie = useCookie<{ tkn: string }>('auth')
-const handleCookie = (payload: string) => {
-  authCookie.value = { tkn: payload }
 }
 
 onMounted(() => {
@@ -58,7 +55,5 @@ onMounted(() => {
     <div v-else-if="data">
       <div v-for="(d, idx) in data.data" :key="idx">{{ d.tourist_name }}</div>
     </div>
-    <button @click="handleCookie('aaa')">Cookie Set</button>
-    <button @click="console.log(authCookie)">Cek</button>
   </div>
 </template>

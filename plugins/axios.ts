@@ -2,7 +2,9 @@ import axios from 'axios'
 
 export default defineNuxtPlugin((_nuxtApp) => {
   const config = useRuntimeConfig()
-  const token = config.public.apiToken
+  const userAuth = useCookie('token')
+
+  const token = userAuth.value
 
   axios.defaults.withCredentials = false
   axios.defaults.baseURL = config.public.apiUrl

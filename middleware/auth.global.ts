@@ -3,14 +3,13 @@ export default defineNuxtRouteMiddleware((to) => {
     return
   }
 
-  const whitelistedPaths = ['/login']
+  const whitelistedPaths = ['/login', '/register']
 
   if (!whitelistedPaths.includes(to.path) && !to.path.startsWith('/api')) {
-    const authCookie = useCookie<string>('auth')
-    const token = authCookie.value
-
-    if (!token) {
-      return navigateTo('/login')
-    }
+    // const authCookie = useCookie<string>('auth')
+    // const token = authCookie.value
+    // if (!token) {
+    //   return navigateTo('/login')
+    // }
   }
 })
