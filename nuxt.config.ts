@@ -7,6 +7,8 @@ export default defineNuxtConfig({
     // client-side
     public: {
       testEnv: '',
+      apiUrl: '',
+      apiToken: '',
     },
   },
   app: {
