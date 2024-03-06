@@ -1,5 +1,5 @@
 <script setup lang="ts">
-console.log('server')
+console.log('auth')
 </script>
 
 <template>

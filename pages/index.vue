@@ -1,14 +1,19 @@
 <script setup lang="ts">
+const { $getDataList, $axios } = useNuxtApp()
 const config = useRuntimeConfig()
 const storeAuth = useAuthStore()
 
-const { $getDataList, $axios } = useNuxtApp()
-const { data, pending } = await $getDataList()
-// const { data } = await useFetchApi('/tourist', {})
+// fetch using custom plugin
+const { data } = await $getDataList()
 if (data) {
   console.log(data.value)
 }
 const loading = ref(true)
+
+// fetch using custom composable
+const res = await useFetchApi('/tourist', {})
+const resData = res.data
+console.log(resData.value)
 
 // fetch using axios
 const loadDataAxios = () => {
@@ -18,7 +23,7 @@ const loadDataAxios = () => {
       console.log(res.data)
     })
     .catch((err) => {
-      console.log(err.response)
+      console.log(err.response.data)
     })
 }
 
@@ -49,11 +54,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="!loading" class="flex h-screen w-full flex-col items-center gap-2">
+  <div v-if="loading" class="flex h-screen w-full items-center justify-center">
+    Loading o o o
+  </div>
+  <div v-else class="flex h-screen w-full flex-col items-center gap-2">
     <h1 class="text-5xl">INDEX PAGE</h1>
-    <div v-if="pending">Loading...</div>
-    <div v-else-if="data">
-      <div v-for="(d, idx) in data.data" :key="idx">{{ d.tourist_name }}</div>
+    <div class="flex flex-col gap-4">
+      <div
+        v-for="(d, idx) in data.data"
+        :key="idx"
+        class="h-36 rounded-xl bg-gray-200 px-3 py-5"
+      >
+        {{ d.tourist_name }}
+      </div>
     </div>
   </div>
 </template>

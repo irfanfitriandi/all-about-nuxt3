@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     public: {
       testEnv: '',
       apiUrl: '',
-      apiToken: '',
     },
   },
   app: {

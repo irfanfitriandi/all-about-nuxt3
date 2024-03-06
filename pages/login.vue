@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
 definePageMeta({
-  layout: 'server',
+  layout: 'auth',
 })
+const loading = ref(true)
 const storeAuth = useAuthStore()
 
 const formLogin = reactive({
@@ -15,10 +16,16 @@ const submitLogin = () => {
     navigateTo('/')
   })
 }
+onMounted(() => {
+  loading.value = false
+})
 </script>
 
 <template>
-  <div class="flex h-screen w-full flex-col items-center justify-center">
+  <div v-if="loading" class="flex h-screen w-full items-center justify-center">
+    Loading o o o
+  </div>
+  <div v-else class="flex h-screen w-full flex-col items-center justify-center">
     <NuxtLink to="/">gaz</NuxtLink>
     <NuxtLink to="/register">registez</NuxtLink>
     <form

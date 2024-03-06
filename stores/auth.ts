@@ -2,7 +2,7 @@ export const useAuthStore = defineStore('auth', () => {
   const { $createLogin } = useNuxtApp()
   const cookieAuth = useCookie('token')
   // state
-  const token = ref(cookieAuth.value ?? '')
+  const token = ref('')
   const profileInfo = reactive({
     Id: '',
     Name: '',
@@ -14,7 +14,7 @@ export const useAuthStore = defineStore('auth', () => {
     await $createLogin(body).then((res: any) => {
       const t = res.data.Token
       token.value = t
-      cookieAuth.value = t
+      cookieAuth.value = btoa(t)
       profileInfo.Id = res.data.Id
       profileInfo.Name = res.data.Name
       profileInfo.Email = res.data.Email
@@ -30,5 +30,8 @@ export const useAuthStore = defineStore('auth', () => {
     })
   }
 
+  if (!token.value && cookieAuth.value) {
+    token.value = atob(cookieAuth.value)
+  }
   return { token, login, register }
 })

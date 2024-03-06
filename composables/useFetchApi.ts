@@ -5,14 +5,12 @@ export default async <T>(
   url: string | (() => string),
   options: UseFetchOptions<T> = {},
 ) => {
-  const userAuth = useCookie('token')
+  const token = useAuthStore().token
 
   const defaults: UseFetchOptions<T> = {
     baseURL: '/api',
     // set user token if connected
-    headers: userAuth.value
-      ? { Authorization: `Bearer ${userAuth.value}` }
-      : {},
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
   }
 
   const params = defu(options, defaults)
@@ -20,7 +18,8 @@ export default async <T>(
   const { data, refresh, error, pending } = await useFetch(url, params)
 
   if (error.value) {
-    throw new Error(error.value as any)
+    console.log(error.value)
+    // throw new Error(error.value as any)
     // throw createError(error.value as any)
   }
 

@@ -4,11 +4,6 @@ console.log('render')
 
 <template>
   <div>
-    <!-- <ClientOnly> -->
-    <!-- <template #fallback>
-        <div>Loading...</div>
-      </template> -->
     <slot />
-    <!-- </ClientOnly> -->
   </div>
 </template>
